@@ -20,8 +20,6 @@ var nombres = new Array();
 io.on('connection', function (socket) {
   var addedUser = false;
 
-
-  nombres.push(socket.username);
   // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
     // we tell the client to execute 'new message'
@@ -37,6 +35,7 @@ io.on('connection', function (socket) {
 
     // we store the username in the socket session for this client
     socket.username = username;
+    nombres.push(socket.username);
     ++numUsers;
     addedUser = true;
     socket.emit('login', {
