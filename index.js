@@ -45,8 +45,7 @@ io.on('connection', function (socket) {
     // echo globally (all clients) that a person has connected
     socket.broadcast.emit('user joined', {
       username: socket.username,
-      numUsers: numUsers,
-      nombres: nombres
+      numUsers: numUsers
     });
   });
 
@@ -68,14 +67,12 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function () {
     if (addedUser) {
       --numUsers;
-      var index = nombres.indexOf(socket.username);
+       var index = nombres.indexOf(socket.username);
       nombres.splice(index, 1);
-
       // echo globally that this client has left
       socket.broadcast.emit('user left', {
         username: socket.username,
-        numUsers: numUsers,
-        nombres: nombres
+        numUsers: numUsers
       });
     }
   });
