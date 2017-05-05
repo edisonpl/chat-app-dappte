@@ -15,6 +15,7 @@ app.use(express.static(__dirname + '/public'));
 // Chatroom
 
 var numUsers = 0;
+var nombres = new Array();
 
 io.on('connection', function (socket) {
   var addedUser = false;
@@ -26,6 +27,7 @@ io.on('connection', function (socket) {
       username: socket.username,
       message: data
     });
+    nombres.push(socket.username);
   });
 
   // when the client emits 'add user', this listens and executes
@@ -37,7 +39,8 @@ io.on('connection', function (socket) {
     ++numUsers;
     addedUser = true;
     socket.emit('login', {
-      numUsers: numUsers
+      numUsers: numUsers,
+      nombres: nombres
     });
     // echo globally (all clients) that a person has connected
     socket.broadcast.emit('user joined', {
