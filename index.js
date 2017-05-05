@@ -73,7 +73,7 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function () {
     if (addedUser) {
       --numUsers;
-      var index = nombres.indexOf(5);
+      var index = nombres.indexOf(socket.username);
       nombres.splice(index, 1);
       // echo globally that this client has left
       socket.broadcast.emit('user left', {
