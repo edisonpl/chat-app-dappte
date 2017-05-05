@@ -20,6 +20,8 @@ var nombres = new Array();
 io.on('connection', function (socket) {
   var addedUser = false;
 
+
+  nombres.push(socket.username);
   // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
     // we tell the client to execute 'new message'
@@ -27,7 +29,6 @@ io.on('connection', function (socket) {
       username: socket.username,
       message: data
     });
-    nombres.push(socket.username);
   });
 
   // when the client emits 'add user', this listens and executes
@@ -67,8 +68,6 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function () {
     if (addedUser) {
       --numUsers;
-       var index = nombres.indexOf(socket.username);
-      nombres.splice(index, 1);
       // echo globally that this client has left
       socket.broadcast.emit('user left', {
         username: socket.username,
