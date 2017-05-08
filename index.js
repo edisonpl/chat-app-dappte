@@ -38,6 +38,8 @@ io.on('connection', function (socket) {
 
     // we store the username in the socket session for this client
     socket.username = username;
+    socket.fecha = fecha;
+
     nombres.push(socket.username);
     fechas.push(fecha);
 
@@ -49,15 +51,13 @@ io.on('connection', function (socket) {
       fecha: fechas
     });
 
-    socket.emit('get', {
-      numUsers: numUsers,
-      nombres: nombres
-    });
+
     // echo globally (all clients) that a person has connected
     socket.broadcast.emit('user joined', {
       username: socket.username,
       numUsers: numUsers,
-      nombres: nombres
+      nombres: nombres,
+      fecha:fechas
     });
   });
 
@@ -81,11 +81,15 @@ io.on('connection', function (socket) {
       --numUsers;
       var index = nombres.indexOf(socket.username);
       nombres.splice(index, 1);
+
+      var index2 = fechas.indexOf(socket.fecha);
+      fechas.splice(index2, 1);
       // echo globally that this client has left
       socket.broadcast.emit('user left', {
         username: socket.username,
         numUsers: numUsers,
-        nombres: nombres
+        nombres: nombres,
+        fecha:fechas
       });
     }
   });
