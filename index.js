@@ -33,15 +33,17 @@ io.on('connection', function (socket) {
   });
 
   // when the client emits 'add user', this listens and executes
-  socket.on('add user', function (username,fecha) {
+  socket.on('add user', function (username) {
     if (addedUser) return;
 
+
+    var fecha = new Date();
     // we store the username in the socket session for this client
     socket.username = username;
     socket.fecha = fecha;
 
     nombres.push(socket.username);
-    fechas.push(fecha);
+    fechas.push(socket.fecha);
 
     ++numUsers;
     addedUser = true;
