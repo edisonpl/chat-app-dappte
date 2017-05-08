@@ -44,7 +44,7 @@ io.on('connection', function (socket) {
     socket.emit('login', {
       numUsers: numUsers,
       nombres: nombres,
-      fehca: socket.fecha
+      fecha: socket.fecha
 
     });
 
