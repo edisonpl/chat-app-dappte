@@ -16,6 +16,8 @@ app.use(express.static(__dirname + '/public'));
 
 var numUsers = 0;
 var nombres = new Array();
+var fechas = new Array();
+
 
 io.on('connection', function (socket) {
   var addedUser = false;
@@ -37,12 +39,14 @@ io.on('connection', function (socket) {
     // we store the username in the socket session for this client
     socket.username = username;
     nombres.push(socket.username);
+    fechas.push(fecha);
+
     ++numUsers;
     addedUser = true;
     socket.emit('login', {
       numUsers: numUsers,
       nombres: nombres,
-      fecha: fecha
+      fecha: fechas
     });
 
     socket.emit('get', {
