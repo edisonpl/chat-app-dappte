@@ -31,10 +31,9 @@ io.on('connection', function (socket) {
   });
 
   // when the client emits 'add user', this listens and executes
-  socket.on('add user', function (username) {
+  socket.on('add user', function (username,fecha) {
     if (addedUser) return;
 
-    var datetime = new Date();
     // we store the username in the socket session for this client
     socket.username = username;
     nombres.push(socket.username);
@@ -43,7 +42,7 @@ io.on('connection', function (socket) {
     socket.emit('login', {
       numUsers: numUsers,
       nombres: nombres,
-      fecha: datetime
+      fecha: fecha
     });
 
     socket.emit('get', {
