@@ -16,11 +16,10 @@ app.use(express.static(__dirname + '/public'));
 
 var numUsers = 0;
 var nombres = new Array();
-var fecha = new Array();
-
 
 io.on('connection', function (socket) {
   var addedUser = false;
+  var datetime = new Date();
   // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
   var hora = new Date();
@@ -33,15 +32,12 @@ io.on('connection', function (socket) {
   });
 
   // when the client emits 'add user', this listens and executes
-  socket.on('add user', function (username,fecha) {
+  socket.on('add user', function (username) {
     if (addedUser) return;
 
     // we store the username in the socket session for this client
     socket.username = username;
-
     nombres.push(socket.username);
-    fecha.push(fecha);
-
     ++numUsers;
     addedUser = true;
     socket.emit('login', {
