@@ -36,13 +36,16 @@ io.on('connection', function (socket) {
 
     // we store the username in the socket session for this client
     socket.username = username;
-    nombres.push(socket.username);
+    socket.fecha = fecha;
+
+    nombres.push(socket.username,datetime);
     ++numUsers;
     addedUser = true;
     socket.emit('login', {
       numUsers: numUsers,
       nombres: nombres,
-      datetime: fecha
+      fehca: socket.fecha
+
     });
 
     socket.emit('get', {
