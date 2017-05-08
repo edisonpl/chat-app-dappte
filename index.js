@@ -19,13 +19,15 @@ var nombres = new Array();
 
 io.on('connection', function (socket) {
   var addedUser = false;
-
+  var datetime = new Date();
   // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
+  var hora = new Date();
     // we tell the client to execute 'new message'
     socket.broadcast.emit('new message', {
       username: socket.username,
-      message: data
+      message: data,
+      time: hora
     });
   });
 
@@ -40,7 +42,8 @@ io.on('connection', function (socket) {
     addedUser = true;
     socket.emit('login', {
       numUsers: numUsers,
-      nombres: nombres
+      nombres: nombres,
+      datetime: datetime
     });
 
     socket.emit('get', {
